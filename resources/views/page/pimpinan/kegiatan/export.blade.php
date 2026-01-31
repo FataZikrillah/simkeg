@@ -3,132 +3,266 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Laporan Kegiatan</title>
+    <title> </title>
     <style>
+        @page {
+            margin: 0;
+            size: auto;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            color: #333;
-            line-height: 1.6;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 11pt;
+            color: #1a1a1a;
+            line-height: 1.4;
+            margin: 0;
+            padding: 1.5cm;
+            /* Menjaga konten tetap memiliki margin dari tepi kertas */
         }
 
-        .header {
+        /* Kop Surat Styles */
+        .kop-surat {
+            border-bottom: 3px solid #000;
+            padding-bottom: 2px;
+            margin-bottom: 2px;
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #7B3F61;
-            padding-bottom: 10px;
+            position: relative;
         }
 
-        .header h1 {
-            color: #7B3F61;
+        .kop-header-line {
+            border-bottom: 1px solid #000;
+            margin-bottom: 20px;
+        }
+
+        .instansi-name {
+            font-size: 16pt;
+            font-weight: bold;
             margin: 0;
             text-transform: uppercase;
         }
 
-        .header p {
+        .instansi-sub {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .instansi-address {
+            font-size: 10pt;
+            font-style: italic;
             margin: 5px 0;
         }
 
+        /* Document Title */
+        .doc-title {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .doc-title h2 {
+            text-decoration: underline;
+            margin-bottom: 5px;
+            font-size: 14pt;
+        }
+
+        .doc-title p {
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        /* Table Styles */
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         .table th,
         .table td {
-            border: 1px solid #ddd;
-            padding: 10px;
+            border: 1px solid #000;
+            padding: 6px 8px;
             text-align: left;
+            font-size: 10pt;
         }
 
         .table th {
-            background-color: #f8f9fa;
-            color: #7B3F61;
-            font-weight: bold;
-        }
-
-        .status {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
+            background-color: #f2f2f2;
+            text-align: center;
             font-weight: bold;
             text-transform: uppercase;
         }
 
-        .status-disetujui {
-            background-color: #d1fae5;
-            color: #065f46;
+        .text-center {
+            text-align: center;
         }
 
-        .status-pending {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-ditolak {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-
-        .footer {
-            margin-top: 50px;
+        .text-right {
             text-align: right;
         }
 
-        .footer p {
-            margin: 0;
+        /* Status & Priority tags */
+        .status-badge {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 8pt;
+        }
+
+        /* Signature Styles */
+        .signature-wrapper {
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .signature-box {
+            float: right;
+            width: 250px;
+            text-align: center;
+        }
+
+        .signature-space {
+            height: 80px;
+        }
+
+        /* Print Fallback UI */
+        .no-print {
+            background: #fdfdfd;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-print {
+            padding: 8px 16px;
+            background: #7B3F61;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn-back {
+            padding: 8px 16px;
+            background: #6c757d;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                margin: 0;
+                -webkit-print-color-adjust: exact;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Laporan Kegiatan</h1>
-        <p>Sistem Informasi Manajemen Kegiatan (Simkeg)</p>
-        <p>Tanggal Cetak: {{ now()->format('d M Y H:i') }}</p>
+    @if (isset($is_print))
+        <div class="no-print">
+            <div>
+                <span style="font-weight: bold; color: #7B3F61;">SIMKEG | Print Preview</span>
+            </div>
+            <div>
+                <button onclick="window.print()" class="btn-print">
+                    🖨️ Cetak Laporan (PDF)
+                </button>
+                <a href="{{ route('pimpinan.kegiatan.index') }}" class="btn-back">
+                    🔙 Kembali
+                </a>
+            </div>
+        </div>
+    @endif
+
+    <!-- KOP SURAT -->
+    <div class="kop-surat">
+        <h1 class="instansi-name">Sistem Informasi Manajemen Kegiatan</h1>
+        <h2 class="instansi-sub">SIMKEG DIGITAL SOLUTIONS</h2>
+        <p class="instansi-address">
+            Jl. Raya Perkantoran No. 45, Lantai 4, Jakarta Selatan<br>
+            Telp: (021) 1234567 | Website: www.simkeg.com | Email: support@simkeg.com
+        </p>
+    </div>
+    <div class="kop-header-line"></div>
+
+    <!-- JUDUL DOKUMEN -->
+    <div class="doc-title">
+        <h2>LAPORAN REKAPITULASI KEGIATAN</h2>
+        <p>Periode Cetak: {{ now()->format('d F Y') }}</p>
     </div>
 
+    <!-- DAFTAR KEGIATAN -->
     <table class="table">
         <thead>
             <tr>
-                <th width="5%">No</th>
-                <th width="25%">Kegiatan</th>
+                <th width="5%">No.</th>
+                <th width="30%">Nama Kegiatan</th>
                 <th width="15%">Tanggal</th>
                 <th width="15%">Lokasi</th>
                 <th width="15%">Anggaran</th>
-                <th width="15%">Status</th>
+                <th width="10%">Status</th>
                 <th width="10%">Prioritas</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($kegiatans as $index => $item)
+            @forelse($kegiatans as $index => $item)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td class="text-center">{{ $index + 1 }}</td>
                     <td>
                         <strong>{{ $item->judul }}</strong><br>
-                        <small>{{ Str::limit($item->deskripsi, 50) }}</small>
+                        <span style="font-size: 9pt; color: #444;">{{ Str::limit($item->deskripsi, 60) }}</span>
                     </td>
-                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
+                    <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                     <td>{{ $item->lokasi }}</td>
-                    <td>{{ $item->anggaran ? 'Rp ' . number_format($item->anggaran->nominal, 0, ',', '.') : '-' }}</td>
-                    <td>
-                        <span class="status status-{{ $item->status }}">
-                            {{ ucfirst($item->status) }}
-                        </span>
+                    <td class="text-right">
+                        {{ $item->anggaran->isNotEmpty() ? 'Rp ' . number_format($item->anggaran->sum('nominal'), 0, ',', '.') : '-' }}
                     </td>
-                    <td>{{ ucfirst($item->prioritas ?? 'Normal') }}</td>
+                    <td class="text-center status-badge">
+                        {{ $item->status }}
+                    </td>
+                    <td class="text-center">
+                        {{ $item->prioritas ?? 'Normal' }}
+                    </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center">Tidak ada data kegiatan ditemukan.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 
-    <div class="footer">
-        <p>Dicetak secara otomatis oleh sistem pada {{ now()->format('d F Y') }}</p>
-        <p>Mengetahui,</p>
-        <br><br><br>
-        <p><strong>Pimpinan Simkeg</strong></p>
+    <!-- TANDA TANGAN -->
+    <div class="signature-wrapper">
+        <div class="signature-box">
+            <p>Jakarta, {{ now()->format('d F Y') }}</p>
+            <p><strong>Pimpinan Organisasi</strong></p>
+            <div class="signature-space"></div>
+            <p><u>( ......................................... )</u></p>
+            <p>NIP. .....................................</p>
+        </div>
+        <div style="clear: both;"></div>
     </div>
+
+    @if (isset($is_print))
+        <script>
+            window.onload = function() {
+                setTimeout(function() {
+                    window.print();
+                }, 800);
+            }
+        </script>
+    @endif
 </body>
 
 </html>

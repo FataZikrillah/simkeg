@@ -49,27 +49,20 @@ class KegiatanController extends Controller
     {
         $query = Kegiatan::with(['user', 'anggaran']);
 
-        // Apply the same filters as index
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('prioritas')) {
-            $query->where('prioritas', $request->prioritas);
-        }
-
-        if ($request->filled('start_date')) {
-            $query->whereDate('tanggal', '>=', $request->start_date);
-        }
-
-        if ($request->filled('end_date')) {
-            $query->whereDate('tanggal', '<=', $request->end_date);
-        }
+        // Apply filters
+        if ($request->filled('status')) $query->where('status', $request->status);
+        if ($request->filled('prioritas')) $query->where('prioritas', $request->prioritas);
+        if ($request->filled('start_date')) $query->whereDate('tanggal', '>=', $request->start_date);
+        if ($request->filled('end_date')) $query->whereDate('tanggal', '<=', $request->end_date);
 
         $kegiatans = $query->latest()->get();
 
-        $pdf = Pdf::loadView('page.pimpinan.kegiatan.export', compact('kegiatans'));
+        // Fallback: Jika library DomPDF belum terinstal, arahkan ke browser print
+        if (!class_exists('Barryvdh\DomPDF\Facade\Pdf')) {
+            return view('page.pimpinan.kegiatan.export', compact('kegiatans'))->with('is_print', true);
+        }
 
+        $pdf = Pdf::loadView('page.pimpinan.kegiatan.export', compact('kegiatans'));
         return $pdf->download('laporan-kegiatan-' . now()->format('Y-m-d') . '.pdf');
     }
 }
