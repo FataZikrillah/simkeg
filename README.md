@@ -1,59 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIMKEG - Sistem Informasi Manajemen Kegiatan
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+SIMKEG adalah aplikasi platform manajemen internal yang dirancang untuk mendigitalisasi proses perencanaan, pelaksanaan, dan pelaporan kegiatan. Aplikasi ini menekankan pada kemudahan pemantauan anggaran serta keteraturan dokumentasi di setiap tahap kegiatan.
 
-## About Laravel
+## 🚀 Fitur Utama Berdasarkan Peran
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi ini menggunakan sistem Multi-Role yang terbagi menjadi tiga tingkatan akses:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. 🛡️ Admin (Super User)
+*   **Manajemen User**: Menambah, mengubah, dan menonaktifkan akun Staff maupun Pimpinan.
+*   **Kontrol Anggaran Global**: Memantau seluruh arus kas anggaran kegiatan di sistem.
+*   **Audit Laporan**: Memiliki akses baca ke seluruh laporan yang dikirimkan.
+*   **Premium Dashboard**: Grafik statistik performa organisasi dan rekapitulasi data.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. 👨‍💼 Pimpinan (Manajerial)
+*   **Approval System**: Melakukan persetujuan (Approve) atau penolakan (Reject) terhadap laporan kegiatan staff.
+*   **Ekspor Laporan PDF**: Fitur ekspor daftar kegiatan ke format PDF yang rapi, didukung dengan filter dinamis (status, prioritas, tanggal).
+*   **Monitoring Real-time**: Memantau progress kegiatan yang sedang berlangsung dan penggunaan anggarannya.
 
-## Learning Laravel
+### 3. 🧑‍💻 Staff (Operasional)
+*   **Input Kegiatan**: Membuat entri kegiatan baru dengan atribut prioritas dan jadwal.
+*   **Manajemen Anggaran & Dokumentasi**: Mencatat pengeluaran anggaran dan mengunggah foto bukti kegiatan secara detail.
+*   **Pelaporan AJAX**: Filter data kegiatan yang cepat tanpa reload halaman menggunakan teknologi AJAX Fetch.
+*   **Submission Laporan**: Mengirimkan laporan akhir kegiatan untuk direview oleh Pimpinan.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🛠️ Teknologi yang Digunakan
+*   **Backend**: Laravel 12 (PHP 8.2+)
+*   **Database**: SQLite (Ringan & Cepat)
+*   **Frontend**: Tailwind CSS (Desain Premium & Responsive)
+*   **Interaktivitas**: JavaScript Vanilla (AJAX Fetch API)
+*   **Reporting**: barryvdh/laravel-dompdf
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📥 Panduan Instalasi (Git Clone)
 
-## Laravel Sponsors
+Ikuti langkah-langkah di bawah ini untuk menjalankan project di lingkungan lokal Anda:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1.  **Clone Repositori**:
+    ```bash
+    git clone [URL_REPO_ANDA]
+    cd Simkeg/simkeg
+    ```
 
-### Premium Partners
+2.  **Instal PHP Dependencies**:
+    ```bash
+    composer install
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3.  **Instal Front-end Dependencies**:
+    ```bash
+    npm install
+    ```
 
-## Contributing
+4.  **Konfigurasi Environment**:
+    Salin file contoh konfigurasi ke `.env`:
+    ```bash
+    cp .env.example .env
+    ```
+    Buka file `.env` dan pastikan pengaturan database mengarah ke SQLite (default):
+    `DB_CONNECTION=sqlite`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5.  **Generate App Key & Database**:
+    ```bash
+    php artisan key:generate
+    php artisan migrate --seed
+    ```
 
-## Code of Conduct
+6.  **Jalankan Aplikasi**:
+    Buka dua terminal dan jalankan perintah berikut:
+    *   Terminal 1: `php artisan serve`
+    *   Terminal 2: `npm run dev`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ⚠️ Troubleshooting: Masalah DomPDF
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Salah satu kendala umum saat instalasi adalah error:
+`Class "Barryvdh\DomPDF\Facade\Pdf" not found` atau error saat `composer install`.
 
-## License
+### Masalah
+Hal ini terjadi karena library `dompdf` gagal diunduh atau diekstrak secara sempurna oleh Composer karena kendala jaringan atau pembatasan sistem (timeout).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Solusi Cepat
+Jika Anda menemui error tersebut, jalankan perintah perintah "Force Install" berikut di terminal Anda:
+
+```bash
+composer update barryvdh/laravel-dompdf --no-scripts
+```
+
+**Jika cara di atas gagal:**
+1.  Hapus folder `vendor/` dan file `composer.lock`.
+2.  Jalankan `composer install --no-scripts`.
+3.  Jalankan `php artisan optimize:clear`.
+
+---
+© 2026 **SIMKEG Team**. Built with ❤️ for better activity management.
