@@ -7,6 +7,7 @@ use App\Models\Kegiatan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KegiatanController extends Controller
 {
@@ -41,6 +42,28 @@ class KegiatanController extends Controller
         }
 
         return view('page.staff.kegiatan.index', compact('kegiatans'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $query = Kegiatan::with(['user', 'anggaran'])
+            ->where('user_id', Auth::id());
+
+        // Apply filters
+        if ($request->filled('status')) $query->where('status', $request->status);
+        if ($request->filled('prioritas')) $query->where('prioritas', $request->prioritas);
+        if ($request->filled('start_date')) $query->whereDate('tanggal', '>=', $request->start_date);
+        if ($request->filled('end_date')) $query->whereDate('tanggal', '<=', $request->end_date);
+
+        $kegiatans = $query->latest()->get();
+
+        // Fallback: Jika library DomPDF belum terinstal, arahkan ke browser print
+        if (!class_exists('Barryvdh\DomPDF\Facade\Pdf')) {
+            return view('page.staff.kegiatan.export', compact('kegiatans'))->with('is_print', true);
+        }
+
+        $pdf = Pdf::loadView('page.staff.kegiatan.export', compact('kegiatans'));
+        return $pdf->download('laporan-kegiatan-staf-' . now()->format('Y-m-d') . '.pdf');
     }
 
     public function create()

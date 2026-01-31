@@ -11,9 +11,31 @@ use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $laporans = Laporan::with(['kegiatan', 'user'])->latest()->paginate(10);
+        $query = Laporan::with(['kegiatan', 'user']);
+
+        // Filter by Search Query (Judul)
+        if ($request->has('search') && $request->search != '') {
+            $query->where('judul', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter by Status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by Date
+        if ($request->has('tanggal') && $request->tanggal != '') {
+            $query->whereDate('tanggal_laporan', $request->tanggal);
+        }
+
+        $laporans = $query->latest()->paginate(10);
+
+        if ($request->ajax()) {
+            return view('page.pimpinan.laporan._table', compact('laporans'))->render();
+        }
+
         return view('page.pimpinan.laporan.index', compact('laporans'));
     }
 

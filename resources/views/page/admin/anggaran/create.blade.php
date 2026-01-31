@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Add New Budget')
+@section('title', 'Tambah Data Anggaran')
 
 @section('content')
     <div class="max-w-4xl mx-auto space-y-6">
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-maroon-soft">Add New Budget</h2>
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-maroon-soft">Tambah Data Anggaran</h2>
                 <p class="text-slate-500 text-sm font-medium italic">
-                    Create a new financial allocation for organization activities.</p>
+                    Tambah data anggaran baru untuk kegiatan.</p>
             </div>
             <div class="flex items-center gap-2">
                 <a href="{{ route('admin.anggaran.index') }}"
@@ -32,7 +32,7 @@
                         <div class="space-y-6">
                             <h3
                                 class="text-xs font-bold text-abu-muda uppercase tracking-[0.2em] border-b border-slate-50 pb-2">
-                                Primary Allocation Details</h3>
+                                Data Anggaran</h3>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Activity Selection -->
@@ -40,13 +40,13 @@
                                     <label
                                         class="text-[10px] font-bold text-abu-muda uppercase tracking-wider flex items-center gap-2">
                                         <i class="fas fa-link text-maroon-soft"></i>
-                                        Related Activity <span class="text-red-500">*</span>
+                                        Kegiatan <span class="text-red-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <select name="kegiatan_id"
                                             class="w-full pl-11 pr-10 py-3 bg-beige-bg/20 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-maroon-soft/20 focus:border-maroon-soft transition-all appearance-none @error('kegiatan_id') border-red-500 @enderror"
                                             required>
-                                            <option value="">-- Select Activity --</option>
+                                            <option value="">-- Pilih Kegiatan --</option>
                                             @foreach($kegiatan as $k)
                                                 <option value="{{ $k->id }}" {{ old('kegiatan_id') == $k->id ? 'selected' : '' }}>
                                                     {{ $k->judul }} ({{ \Carbon\Carbon::parse($k->tanggal)->format('d M Y') }})
@@ -71,7 +71,7 @@
                                     <label
                                         class="text-[10px] font-bold text-abu-muda uppercase tracking-wider flex items-center gap-2">
                                         <i class="fas fa-coins text-maroon-soft"></i>
-                                        Budget Amount <span class="text-red-500">*</span>
+                                        Jumlah Anggaran <span class="text-red-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <input type="number" name="jumlah"
@@ -82,8 +82,7 @@
                                             Rp
                                         </div>
                                     </div>
-                                    <p class="text-[9px] text-slate-400 italic">Enter the total numeric value without dots
-                                        or commas.</p>
+                                    <p class="text-[9px] text-slate-400 italic">Masukkan jumlah anggaran tanpa titik atau koma.</p>
                                     @error('jumlah')
                                         <p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
                                     @enderror
@@ -94,13 +93,13 @@
                                     <label
                                         class="text-[10px] font-bold text-abu-muda uppercase tracking-wider flex items-center gap-2">
                                         <i class="fas fa-piggy-bank text-maroon-soft"></i>
-                                        Source of Funds <span class="text-red-500">*</span>
+                                        Sumber Dana <span class="text-red-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <select name="sumber_dana"
                                             class="w-full pl-11 pr-10 py-3 bg-beige-bg/20 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-maroon-soft/20 focus:border-maroon-soft transition-all appearance-none @error('sumber_dana') border-red-500 @enderror"
                                             required>
-                                            <option value="">-- Select Source --</option>
+                                            <option value="">-- Pilih Sumber Dana --</option>
                                             <option value="Kas Kantor" {{ old('sumber_dana') == 'Kas Kantor' ? 'selected' : '' }}>Kas Kantor</option>
                                             <option value="Anggaran Tahunan" {{ old('sumber_dana') == 'Anggaran Tahunan' ? 'selected' : '' }}>Anggaran Tahunan</option>
                                             <option value="Dana Darurat" {{ old('sumber_dana') == 'Dana Darurat' ? 'selected' : '' }}>Dana Darurat</option>
@@ -127,17 +126,17 @@
                                     <label
                                         class="text-[10px] font-bold text-abu-muda uppercase tracking-wider flex items-center gap-2">
                                         <i class="fas fa-tasks text-maroon-soft"></i>
-                                        Allocation Status
+                                        Status Anggaran
                                     </label>
                                     <div class="relative">
                                         <select name="status"
                                             class="w-full pl-11 pr-10 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-maroon-soft/20 focus:border-maroon-soft transition-all appearance-none @error('status') border-red-500 @enderror">
                                             <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending
-                                                (Awaiting Review)</option>
+                                                (Menunggu Review)</option>
                                             <option value="disetujui" {{ old('status') == 'disetujui' ? 'selected' : '' }}>
-                                                Disetujui (Approved)</option>
+                                                Disetujui (Disetujui)</option>
                                             <option value="ditolak" {{ old('status') == 'ditolak' ? 'selected' : '' }}>Ditolak
-                                                (Rejected)</option>
+                                                (Ditolak)</option>
                                         </select>
                                         <div class="absolute left-4 top-1/2 -translate-y-1/2 text-maroon-soft/50">
                                             <i class="fas fa-shield-alt text-xs"></i>
@@ -158,16 +157,16 @@
                         <div class="space-y-6">
                             <h3
                                 class="text-xs font-bold text-abu-muda uppercase tracking-[0.2em] border-b border-slate-50 pb-2">
-                                Purpose and Narrative</h3>
+                                Tujuan dan Penjelasan</h3>
                             <div class="space-y-2">
                                 <label
                                     class="text-[10px] font-bold text-abu-muda uppercase tracking-wider flex items-center gap-2">
                                     <i class="fas fa-align-left text-maroon-soft"></i>
-                                    Allocation Description <span class="text-red-500">*</span>
+                                    Deskripsi Anggaran <span class="text-red-500">*</span>
                                 </label>
                                 <textarea name="keterangan" rows="4"
                                     class="w-full px-4 py-3 bg-beige-bg/20 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-maroon-soft/20 focus:border-maroon-soft transition-all @error('keterangan') border-red-500 @enderror"
-                                    placeholder="Provide a clear justification or item breakdown for this budget allocation..."
+                                    placeholder="Penjelasan tujuan dan pembagian item yang terpisah mempercepat proses peninjauan..."
                                     required>{{ old('keterangan') }}</textarea>
                                 @error('keterangan')
                                     <p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
@@ -179,7 +178,7 @@
                         <div class="space-y-6">
                             <h3
                                 class="text-xs font-bold text-abu-muda uppercase tracking-[0.2em] border-b border-slate-50 pb-2">
-                                Timeline and Documentation</h3>
+                                Timeline dan Dokumentasi</h3>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-6">
@@ -187,7 +186,7 @@
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="space-y-2">
                                             <label class="text-[10px] font-bold text-abu-muda uppercase tracking-wider">
-                                                Allocation Date
+                                                Tanggal Alokasi
                                             </label>
                                             <input type="date" name="tanggal_alokasi"
                                                 class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-maroon-soft/20 focus:border-maroon-soft outline-none transition-all"
@@ -195,7 +194,7 @@
                                         </div>
                                         <div class="space-y-2">
                                             <label class="text-[10px] font-bold text-abu-muda uppercase tracking-wider">
-                                                Est. Completion
+                                                Tanggal Selesai
                                             </label>
                                             <input type="date" name="tanggal_selesai"
                                                 class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-maroon-soft/20 focus:border-maroon-soft outline-none transition-all"
@@ -211,8 +210,8 @@
                                             <i class="fas fa-lock"></i>
                                         </div>
                                         <p class="text-[11px] text-maroon-soft/80 font-medium leading-relaxed italic">
-                                            Financial data is encrypted. Please ensure all allocations follow the
-                                            organization's transparency protocols.
+                                            Data keuangan terenkripsi. Pastikan semua alokasi mengikuti protokol
+                                            transparansi organisasi.
                                         </p>
                                     </div>
                                 </div>
@@ -222,7 +221,7 @@
                                     <label
                                         class="text-[10px] font-bold text-abu-muda uppercase tracking-wider flex items-center gap-2">
                                         <i class="fas fa-paperclip text-maroon-soft"></i>
-                                        Supporting Documents (Optional)
+                                        Dokumen Pendukung (Opsional)
                                     </label>
                                     <div id="drop-zone"
                                         class="group relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-200 rounded-2xl hover:border-maroon-soft/50 hover:bg-beige-bg/10 transition-all cursor-pointer min-h-[140px]">
@@ -234,9 +233,9 @@
                                                 class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mx-auto mb-2 group-hover:scale-110 transition-transform">
                                                 <i class="fas fa-upload text-sm"></i>
                                             </div>
-                                            <p class="text-[11px] font-bold text-slate-600">Select supporting files</p>
+                                            <p class="text-[11px] font-bold text-slate-600">Pilih file pendukung</p>
                                             <p class="text-[9px] text-abu-muda mt-1 uppercase tracking-tighter">PDF, DOC,
-                                                XLS (MAX 10MB each)</p>
+                                                XLS (MAX 5MB setiap file)</p>
                                         </div>
                                         <!-- Multi-file preview will be handled via JS list if needed, but for simplicity showing count -->
                                         <div id="file-count-preview" class="hidden text-center">
@@ -244,11 +243,11 @@
                                                 class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 mx-auto mb-2">
                                                 <i class="fas fa-copy"></i>
                                             </div>
-                                            <p id="file-count-text" class="text-xs font-extrabold text-slate-700">0 Files
-                                                Selected</p>
+                                            <p id="file-count-text" class="text-xs font-extrabold text-slate-700">0 File
+                                                Terpilih</p>
                                             <button type="button" onclick="resetFiles()"
-                                                class="text-[10px] text-red-500 font-bold hover:underline mt-1">Clear
-                                                All</button>
+                                                class="text-[10px] text-red-500 font-bold hover:underline mt-1">Hapus
+                                                Semua</button>
                                         </div>
                                     </div>
                                 </div>
@@ -260,11 +259,11 @@
                     <div class="mt-10 pt-6 border-t border-slate-100 flex flex-col sm:flex-row justify-end gap-3">
                         <a href="{{ route('admin.anggaran.index') }}"
                             class="px-6 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all text-center">
-                            Discard Changes
+                            Batal
                         </a>
                         <button type="submit"
                             class="px-10 py-3 bg-maroon-soft text-white rounded-xl text-sm font-bold hover:brightness-110 shadow-lg shadow-maroon-soft/20 transition-all">
-                            <i class="fas fa-save mr-2"></i> Confirm and Save Budget
+                            <i class="fas fa-save mr-2"></i> Simpan Anggaran
                         </button>
                     </div>
                 </form>
@@ -282,23 +281,23 @@
                     <i class="fas fa-info-circle text-lg"></i>
                 </div>
                 <div>
-                    <h4 class="text-sm font-bold text-slate-800 mb-2 uppercase tracking-tight">Allocation Guidelines</h4>
+                    <h4 class="text-sm font-bold text-slate-800 mb-2 uppercase tracking-tight">Petunjuk Alokasi</h4>
                     <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
                         <li class="flex items-start gap-2 text-xs text-slate-500 leading-relaxed">
                             <span class="w-1 h-1 rounded-full bg-maroon-soft mt-1.5 shrink-0"></span>
-                            Verify that the related activity has been strictly approved first.
+                            Verifikasi bahwa aktivitas terkait telah disetujui dengan ketat terlebih dahulu.
                         </li>
                         <li class="flex items-start gap-2 text-xs text-slate-500 leading-relaxed">
                             <span class="w-1 h-1 rounded-full bg-maroon-soft mt-1.5 shrink-0"></span>
-                            Clear purpose and itemized breakdown improves review speed.
+                            Penjelasan tujuan dan pembagian item yang terpisah mempercepat proses peninjauan.
                         </li>
                         <li class="flex items-start gap-2 text-xs text-slate-500 leading-relaxed">
                             <span class="w-1 h-1 rounded-full bg-maroon-soft mt-1.5 shrink-0"></span>
-                            Support documentation is required for all allocations above Rp 1.000.000.
+                            Dokumen pendukung diperlukan untuk semua alokasi di atas Rp 1.000.000.
                         </li>
                         <li class="flex items-start gap-2 text-xs text-slate-500 leading-relaxed">
                             <span class="w-1 h-1 rounded-full bg-maroon-soft mt-1.5 shrink-0"></span>
-                            Budget status can be toggled to Ditolak (Rejected) if review fails.
+                            Status anggaran dapat diubah menjadi Ditolak (Rejected) jika peninjauan gagal.
                         </li>
                     </ul>
                 </div>

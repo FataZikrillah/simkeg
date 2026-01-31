@@ -100,7 +100,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="bg-white/20 p-2 rounded-lg text-white backdrop-blur-sm">
-                        <i class="fas fa-briefcase text-lg"></i>
+                        <img src="{{ asset('images/logo.png') }}" alt="" class="w-10 h-10">
                     </div>
                     <div>
                         <h1 class="text-sm font-bold leading-none">Office Admin</h1>

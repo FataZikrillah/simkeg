@@ -10,12 +10,25 @@ class DokumentasiSeeder extends Seeder
 {
     public function run(): void
     {
-        $kegiatan = Kegiatan::first();
+        $faker = \Faker\Factory::create('id_ID');
+        $kegiatans = Kegiatan::all();
 
-        Dokumentasi::create([
-            'kegiatan_id' => $kegiatan->id,
-            'file' => 'dokumentasi/rapat-evaluasi.jpg',
-            'keterangan' => 'Dokumentasi rapat evaluasi',
-        ]);
+        if ($kegiatans->isEmpty()) {
+            $this->command->info('No Kegiatan found. Please run KegiatanSeeder first.');
+            return;
+        }
+
+        foreach ($kegiatans as $kegiatan) {
+            // Generate 3-6 documentation entries per kegiatan
+            $count = rand(3, 6);
+
+            for ($i = 0; $i < $count; $i++) {
+                Dokumentasi::create([
+                    'kegiatan_id' => $kegiatan->id,
+                    'file' => 'dokumentasi/dummy-photo-' . $faker->word . '-' . rand(1, 20) . '.jpg',
+                    'keterangan' => $faker->realText(100),
+                ]);
+            }
+        }
     }
 }

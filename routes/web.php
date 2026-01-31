@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     // --- STAFF ROUTES ---
     Route::middleware(['role:staff'])->prefix('staff')->as('staff.')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Staff\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/kegiatan/export-pdf', [App\Http\Controllers\Staff\KegiatanController::class, 'exportPdf'])->name('kegiatan.export-pdf');
         Route::resource('kegiatan', App\Http\Controllers\Staff\KegiatanController::class);
         Route::resource('anggaran', App\Http\Controllers\Staff\AnggaranController::class);
         Route::resource('dokumentasi', App\Http\Controllers\Staff\DokumentasiController::class);

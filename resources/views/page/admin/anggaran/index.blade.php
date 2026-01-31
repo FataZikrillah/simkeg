@@ -1,15 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Budget Management')
+@section('title', 'Anggaran')
 
 @section('content')
     <div class="space-y-6">
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-maroon-soft">Budget Management</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Monitoring financial allocations with a
-                    clean, professional touch.</p>
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-maroon-soft">Anggaran</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Monitoring Anggaran.</p>
             </div>
             <div class="flex items-center gap-2">
                 <a href="{{ route('admin.anggaran.create') }}"
@@ -31,7 +30,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1">Total Budget</p>
+                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1">Total Anggaran</p>
                     <h3 class="text-lg font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-tight">
                         Rp {{ number_format($totalBudget, 0, ',', '.') }}
                     </h3>
@@ -47,7 +46,7 @@
                     <span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">{{ number_format($approvedPercentage, 1) }}%</span>
                 </div>
                 <div>
-                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1 text-green-600/70">Approved</p>
+                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1 text-green-600/70">Disetujui</p>
                     <h3 class="text-lg font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-tight">
                         Rp {{ number_format($approvedBudget, 0, ',', '.') }}
                     </h3>
@@ -63,7 +62,7 @@
                     <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">{{ number_format($pendingPercentage, 1) }}%</span>
                 </div>
                 <div>
-                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1 text-amber-600/70">Pending</p>
+                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1 text-amber-600/70">Ditolak</p>
                     <h3 class="text-lg font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-tight">
                         Rp {{ number_format($pendingBudget, 0, ',', '.') }}
                     </h3>
@@ -79,7 +78,7 @@
                     <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">{{ number_format($rejectedPercentage, 1) }}%</span>
                 </div>
                 <div>
-                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1 text-red-600/70">Rejected</p>
+                    <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest mb-1 text-red-600/70">Ditolak</p>
                     <h3 class="text-lg font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-tight">
                         Rp {{ number_format($rejectedBudget, 0, ',', '.') }}
                     </h3>
@@ -95,7 +94,7 @@
                     <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50">
                         <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
                             <i class="fas fa-list text-maroon-soft"></i>
-                            Budget Allocations
+                            Data Anggaran
                         </h3>
                     </div>
 
@@ -103,10 +102,11 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50/50 dark:bg-slate-800/50">
-                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">Activity</th>
-                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">Amount</th>
-                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">Source</th>
-                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 text-center">Actions</th>
+                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">No</th>
+                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">Kegiatan</th>
+                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">Jumlah</th>
+                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">Sumber</th>
+                                    <th class="px-5 py-4 text-[10px] font-bold text-abu-muda uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
@@ -121,11 +121,11 @@
                                                     <p class="text-sm font-bold text-slate-700 dark:text-slate-200 truncate group-hover:text-maroon-soft transition-colors">{{ $item->kegiatan->judul ?? 'No Activity' }}</p>
                                                     <div class="flex items-center gap-2 mt-1">
                                                         @if($item->status == 'disetujui')
-                                                            <span class="text-[9px] font-bold bg-green-50 text-green-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">Approved</span>
+                                                            <span class="text-[9px] font-bold bg-green-50 text-green-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">Disetujui</span>
                                                         @elseif($item->status == 'pending')
-                                                            <span class="text-[9px] font-bold bg-amber-50 text-amber-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">Pending</span>
+                                                            <span class="text-[9px] font-bold bg-amber-50 text-amber-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">Menunggu</span>
                                                         @else
-                                                            <span class="text-[9px] font-bold bg-red-50 text-red-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">Rejected</span>
+                                                            <span class="text-[9px] font-bold bg-red-50 text-red-600 px-1.5 py-0.5 rounded uppercase tracking-tighter">Ditolak</span>
                                                         @endif
                                                         <span class="text-[9px] font-bold text-abu-muda uppercase">{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</span>
                                                     </div>
@@ -166,7 +166,7 @@
                                                 <div class="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center text-slate-300">
                                                     <i class="fas fa-money-bill-wave text-2xl"></i>
                                                 </div>
-                                                <p class="text-sm font-bold text-slate-400 italic">No budget allocations found.</p>
+                                                <p class="text-sm font-bold text-slate-400 italic">Tidak ada data anggaran.</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -198,7 +198,7 @@
                                 <div class="flex justify-between items-end">
                                     <div class="min-w-0">
                                         <p class="text-[10px] font-bold text-abu-muda uppercase tracking-widest">{{ $source->sumber_dana }}</p>
-                                        <p class="text-xs font-bold text-slate-700 dark:text-slate-200 truncate">{{ $source->count }} Allocations</p>
+                                        <p class="text-xs font-bold text-slate-700 dark:text-slate-200 truncate">{{ $source->count }} Data</p>
                                     </div>
                                     <div class="text-right shrink-0">
                                         <p class="text-sm font-extrabold text-maroon-soft">Rp {{ number_format($source->total, 0, ',', '.') }}</p>
@@ -218,7 +218,7 @@
                                 <i class="fas fa-info-circle text-xs"></i>
                             </div>
                             <p class="text-[10px] text-slate-500 font-medium leading-relaxed italic">
-                                Data is updated in real-time based on approved and pending allocations.
+                                Data anggaran diupdate secara real-time berdasarkan anggaran yang disetujui dan anggaran yang menunggu.
                             </p>
                         </div>
                     </div>
@@ -227,24 +227,24 @@
                 <!-- Status Summary Mini Card -->
                 <div class="bg-maroon-soft rounded-2xl p-6 text-white shadow-lg shadow-maroon-soft/20 relative overflow-hidden group">
                     <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                    <h3 class="text-sm font-bold opacity-80 mb-4 uppercase tracking-widest">Global Status</h3>
+                    <h3 class="text-sm font-bold opacity-80 mb-4 uppercase tracking-widest">Status Anggaran</h3>
                     
                     <div class="space-y-4 relative z-10">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-bold opacity-60">Status Health</span>
-                            <span class="text-xs font-bold px-2 py-0.5 bg-white/20 rounded-full">Optimal</span>
+                            <span class="text-xs font-bold opacity-60">Status Anggaran</span>
+                            <span class="text-xs font-bold px-2 py-0.5 bg-white/20 rounded-full">Normal</span>
                         </div>
                         <div class="grid grid-cols-3 gap-2">
                             <div class="bg-white/10 rounded-xl p-3 text-center">
-                                <p class="text-[10px] font-bold opacity-60 uppercase mb-1">A</p>
+                                <p class="text-[10px] font-bold opacity-60 uppercase mb-1">Disetujui</p>
                                 <p class="text-sm font-extrabold">{{ number_format($approvedPercentage, 0) }}%</p>
                             </div>
                             <div class="bg-white/10 rounded-xl p-3 text-center">
-                                <p class="text-[10px] font-bold opacity-60 uppercase mb-1">P</p>
+                                <p class="text-[10px] font-bold opacity-60 uppercase mb-1">Menunggu</p>
                                 <p class="text-sm font-extrabold">{{ number_format($pendingPercentage, 0) }}%</p>
                             </div>
                             <div class="bg-white/10 rounded-xl p-3 text-center">
-                                <p class="text-[10px] font-bold opacity-60 uppercase mb-1">R</p>
+                                <p class="text-[10px] font-bold opacity-60 uppercase mb-1">Ditolak</p>
                                 <p class="text-sm font-extrabold">{{ number_format($rejectedPercentage, 0) }}%</p>
                             </div>
                         </div>

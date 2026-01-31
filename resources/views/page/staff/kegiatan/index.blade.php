@@ -13,12 +13,13 @@
             </div>
             <div class="mt-4 md:mt-0 flex space-x-3">
                 <a href="{{ route('staff.kegiatan.create') }}"
-                    class="btn p-2 px-4 border border-[#7B3F61] text-[#7B3F61] hover:bg-[#7B3F61] hover:text-white">
+                    class="btn p-2 px-4 border border-[#7B3F61] text-[#7B3F61] hover:bg-[#7B3F61] hover:text-white flex items-center transition-all">
                     <i class="fas fa-plus mr-2"></i> Tambah Kegiatan
                 </a>
-                <button class="btn p-2 px-4 border border-[#7B3F61] text-[#7B3F61] hover:bg-[#7B3F61] hover:text-white">
-                    <i class="fas fa-download mr-2"></i> Export
-                </button>
+                <a href="{{ route('staff.kegiatan.export-pdf') }}" id="btn-export-pdf"
+                    class="btn p-2 px-4 border border-[#7B3F61] text-[#7B3F61] hover:bg-[#7B3F61] hover:text-white flex items-center transition-all">
+                    <i class="fas fa-file-pdf mr-2 text-red-600"></i> Export PDF
+                </a>
             </div>
         </div>
 
@@ -106,13 +107,29 @@
             const tableBody = document.getElementById('kegiatan-table-body');
             const loadingOverlay = document.getElementById('loading-overlay');
             const filters = document.querySelectorAll('.filter-input');
+            const exportBtn = document.getElementById('btn-export-pdf');
 
             const fetchFilteredData = () => {
+                const status = document.getElementById('filter-status').value;
+                const prioritas = document.getElementById('filter-prioritas').value;
+                const startDate = document.getElementById('filter-start-date').value;
+                const endDate = document.getElementById('filter-end-date').value;
+
                 const params = new URLSearchParams();
-                params.append('status', document.getElementById('filter-status').value);
-                params.append('prioritas', document.getElementById('filter-prioritas').value);
-                params.append('start_date', document.getElementById('filter-start-date').value);
-                params.append('end_date', document.getElementById('filter-end-date').value);
+                params.append('status', status);
+                params.append('prioritas', prioritas);
+                params.append('start_date', startDate);
+                params.append('end_date', endDate);
+
+                // Update Export PDF link to match current filters
+                if (exportBtn) {
+                    const exportUrl = new URL("{{ route('staff.kegiatan.export-pdf') }}");
+                    exportUrl.searchParams.set('status', status);
+                    exportUrl.searchParams.set('prioritas', prioritas);
+                    exportUrl.searchParams.set('start_date', startDate);
+                    exportUrl.searchParams.set('end_date', endDate);
+                    exportBtn.href = exportUrl.toString();
+                }
 
                 loadingOverlay.classList.remove('hidden');
 

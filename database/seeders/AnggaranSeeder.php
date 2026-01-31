@@ -10,14 +10,27 @@ class AnggaranSeeder extends Seeder
 {
     public function run(): void
     {
-        $kegiatan = Kegiatan::first();
+        $faker = \Faker\Factory::create('id_ID');
+        $kegiatans = Kegiatan::all();
 
-        Anggaran::create([
-            'kegiatan_id' => $kegiatan->id,
-            'jumlah' => 7500000,
-            'sumber_dana' => 'Kas Kantor',
-            'keterangan' => 'Biaya konsumsi dan operasional',
-            'status' => 'disetujui',
-        ]);
+        if ($kegiatans->isEmpty()) {
+            $this->command->info('No Kegiatan found. Please run KegiatanSeeder first.');
+            return;
+        }
+
+        foreach ($kegiatans as $kegiatan) {
+            // Generate 2-5 budget items per kegiatan
+            $count = rand(2, 5);
+
+            for ($i = 0; $i < $count; $i++) {
+                Anggaran::create([
+                    'kegiatan_id' => $kegiatan->id,
+                    'jumlah' => $faker->numberBetween(500000, 20000000),
+                    'sumber_dana' => $faker->randomElement(['Kas Kantor', 'APBD', 'Sponsor Internal', 'Hibah']),
+                    'keterangan' => $faker->realText(50),
+                    'status' => $faker->randomElement(['pending', 'disetujui']),
+                ]);
+            }
+        }
     }
 }

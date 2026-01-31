@@ -188,8 +188,9 @@
                 <div class="relative z-10">
                     <div
                         class="w-20 h-20 bg-maroon-soft/5 rounded-full mx-auto mb-4 flex items-center justify-center p-1 border-2 border-maroon-soft border-dashed">
-                        @if (Auth::user()->avatar)
-                            <img src="{{ Auth::user()->avatar }}" class="w-full h-full rounded-full object-cover">
+                        @if (Auth::user()->photo)
+                            <img src="{{ asset('storage/' . Auth::user()->photo) }}"
+                                class="w-full h-full rounded-full object-cover">
                         @else
                             <div
                                 class="w-full h-full rounded-full bg-maroon-soft flex items-center justify-center text-white font-black text-2xl">
